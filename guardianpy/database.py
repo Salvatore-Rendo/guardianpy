@@ -19,6 +19,7 @@ def initialize_database():
                         id INTEGER PRIMARY KEY,
                         user_id INTEGER,
                         website TEXT,
+                        email TEXT,
                         password BLOB,
                         FOREIGN KEY (user_id) REFERENCES users (id)
                      )''')
@@ -86,13 +87,11 @@ def authenticate_user(username, password):
     return None
 
 
-
-
-def store_password(user_id, website, password):
+def store_password(user_id, website, email, password):
     conn = sqlite3.connect("password_manager.db")
     cursor = conn.cursor()
 
-    cursor.execute("INSERT INTO passwords (user_id, website, password) VALUES (?, ?, ?)", (user_id, website, password))
+    cursor.execute("INSERT INTO passwords (user_id, website, email, password) VALUES (?, ?, ?, ?)", (user_id, website, email, password))
 
     conn.commit()
     conn.close()
