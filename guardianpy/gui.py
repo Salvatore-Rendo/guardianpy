@@ -15,8 +15,10 @@ def run_gui():
         if not username or not password:
             messagebox.showerror("Error", "Please enter both username and password.")
         else:
-            register_user(username, password)
-            messagebox.showinfo("Success", "Registration successful.")
+            if (register_user(username, password) is True):
+                messagebox.showinfo("Success", "Registration successful.")
+            else: 
+                messagebox.showerror("Error", "Registration failed. Please try again.")
 
     def login():
         username = username_entry.get()

@@ -19,10 +19,10 @@ def initialize_database():
                         id INTEGER PRIMARY KEY,
                         user_id INTEGER,
                         website TEXT,
-                        password TEXT,
+                        password BLOB,
                         FOREIGN KEY (user_id) REFERENCES users (id)
                      )''')
-
+    
     conn.commit()
     conn.close()
 
@@ -32,6 +32,14 @@ def register_user(username, password):
     cursor = conn.cursor()
 
     try:
+        # Check if the username already exists
+        cursor.execute("SELECT username FROM users WHERE username=?", (username,))
+        existing_user = cursor.fetchone()
+        
+        if existing_user:
+            
+            return False
+
         # Generate a random salt
         salt = os.urandom(32)  # 32 bytes for the salt
         password_bytes = password.encode('utf-8')
@@ -41,8 +49,9 @@ def register_user(username, password):
 
         conn.commit()
         conn.close()
-
-        print("Registration Successful.")
+        
+        return True
+    
     except Exception as e:
         print("Registration Failed:", e)
     finally:
