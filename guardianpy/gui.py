@@ -6,7 +6,7 @@ from guardianpy.database import (
     store_password,
     retrieve_password,
 )
-from guardianpy.encryption import encrypt_password, decrypt_password
+from guardianpy.encryption import encrypt_password, decrypt_password, set_master_password, get_master_password
 import guardianpy.generator as generator
 
 class PasswordEntry(tk.Entry):
@@ -43,9 +43,11 @@ def run_gui():
         else:
             user_id = authenticate_user(username, password)
             if user_id is not None:
+                set_master_password(password)  # Set the master password
                 logged_in(user_id)
             else:
                 messagebox.showerror("Error", "Authentication failed. Please try again.")
+
 
     def toggle_password_visibility():
         password_entry.toggle_password_visibility()
@@ -59,19 +61,22 @@ def run_gui():
             website = website_entry.get()
             email = email_entry.get()
             password = password_entry_logged_in.get()  # Use the logged-in password entry
+            master_password = get_master_password()  # Get the master password
             if not website or not email or not password:
                 messagebox.showerror("Error", "Please enter website, email, and password.")
             else:
-                store_password(user_id, website, email, encrypt_password(password))
+                store_password(user_id, website, email, password, master_password)  # Pass the master_password
                 messagebox.showinfo("Success", "Password stored.")
 
         def retrieve():
             website = website_entry.get()
-            password = retrieve_password(user_id, website)
+            master_password = get_master_password()  
+            password = retrieve_password(user_id, website, master_password)  # Pass the master_password
             if password:
-                messagebox.showinfo("Password", f"Password for {website}: {decrypt_password(password)}")
+                messagebox.showinfo("Password", f"Password for {website}: {password}")
             else:
                 messagebox.showerror("Error", "Password not found.")
+
 
         def generate_password():
             length = int(length_var.get())
