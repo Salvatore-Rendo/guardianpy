@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="" alt="Project logo"></a>
+ <img width=200px height=200px src="guardianpy/src/guardianpy.png" alt="Project logo"></a>
 </p>
 
 <h3 align="center">Project Title</h3>
@@ -87,6 +87,7 @@ python3 main.py
 - [SQLite](https://www.sqlite.org/index.html) - Database
 - [Python](https://www.python.org/) - Framework
 - [TKinter](https://docs.python.org/3/library/tkinter.html) - GUI Framework
+- [Flaticon](https://www.flaticon.com/) Icon
 
 ## ✍️ Authors <a name = "authors"></a>
 
