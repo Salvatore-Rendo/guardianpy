@@ -3,10 +3,10 @@ import hashlib
 import os
 from guardianpy.encryption import generate_key, encrypt_password, decrypt_password
 
-master_password = None
-
+master_password = None  # Initialize the master password as None
 
 def initialize_database():
+    # Initialize the database and create necessary tables if they don't exist
     conn = sqlite3.connect("password_manager.db")
     cursor = conn.cursor()
     cursor.execute('''CREATE TABLE IF NOT EXISTS users (
@@ -27,6 +27,7 @@ def initialize_database():
     conn.close()
 
 def register_user(username, password):
+    # Register a user in the database
     conn = sqlite3.connect("password_manager.db")
     cursor = conn.cursor()
     cursor.execute("SELECT username FROM users WHERE username=?", (username,))
@@ -42,6 +43,7 @@ def register_user(username, password):
     return True
 
 def authenticate_user(username, password):
+    # Authenticate a user based on username and password
     conn = sqlite3.connect("password_manager.db")
     cursor = conn.cursor()
     cursor.execute("SELECT id, salt, password FROM users WHERE username=?", (username,))
@@ -57,6 +59,7 @@ def authenticate_user(username, password):
     return None
 
 def store_password(user_id, website, email, password, master_password):
+    # Store a credential password in the database
     conn = sqlite3.connect("password_manager.db")
     cursor = conn.cursor()
     key = generate_key(master_password, user_id.to_bytes(32, 'big'))
@@ -66,6 +69,7 @@ def store_password(user_id, website, email, password, master_password):
     conn.close()
 
 def retrieve_password(user_id, website, master_password):
+    # Retrieve a stored credential password from the database
     conn = sqlite3.connect("password_manager.db")
     cursor = conn.cursor()
     cursor.execute("SELECT password FROM passwords WHERE user_id=? AND website=?", (user_id, website))
@@ -76,4 +80,3 @@ def retrieve_password(user_id, website, master_password):
         decrypted_password = decrypt_password(encrypted_password[0], key)
         return decrypted_password
     return None
-

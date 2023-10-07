@@ -9,6 +9,8 @@ from guardianpy.database import (
 from guardianpy.encryption import encrypt_password, decrypt_password, set_master_password, get_master_password
 import guardianpy.generator as generator
 
+
+
 class PasswordEntry(tk.Entry):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -21,10 +23,12 @@ class PasswordEntry(tk.Entry):
         else:
             self.config(show="*")
 
-show_password_var = None  # Initialize show_password_var as a global variable
+show_password_var = None    # Initialize show_password_var as a global variable to use for password visibility checkbox
 
 def run_gui():
+    
     def register():
+        
         username = username_entry.get()
         password = password_entry.get()
         if not username or not password:
@@ -35,7 +39,9 @@ def run_gui():
             else:
                 messagebox.showerror("Error", "Registration failed. Username already exists.")
 
+    #Login handler
     def login():
+        
         username = username_entry.get()
         password = password_entry.get()
         if not username or not password:
@@ -43,20 +49,22 @@ def run_gui():
         else:
             user_id = authenticate_user(username, password)
             if user_id is not None:
-                set_master_password(password)  # Set the master password
+                set_master_password(password)  
                 logged_in(user_id)
             else:
                 messagebox.showerror("Error", "Authentication failed. Please try again.")
 
-
+    #checkbox to change password visibility
     def toggle_password_visibility():
         password_entry.toggle_password_visibility()
 
+    #logged in handeler
     def logged_in(user_id):
         login_window.destroy()
         logged_in_window = tk.Tk()
         logged_in_window.title("Password Manager")
-
+        
+        #password store in DB handler
         def store():
             website = website_entry.get()
             email = email_entry.get()
@@ -65,19 +73,20 @@ def run_gui():
             if not website or not email or not password:
                 messagebox.showerror("Error", "Please enter website, email, and password.")
             else:
-                store_password(user_id, website, email, password, master_password)  # Pass the master_password
+                store_password(user_id, website, email, password, master_password)  
                 messagebox.showinfo("Success", "Password stored.")
-
+                
+        #retriving credentials
         def retrieve():
             website = website_entry.get()
             master_password = get_master_password()  
-            password = retrieve_password(user_id, website, master_password)  # Pass the master_password
+            password = retrieve_password(user_id, website, master_password)  
             if password:
                 messagebox.showinfo("Password", f"Password for {website}: {password}")
             else:
                 messagebox.showerror("Error", "Password not found.")
 
-
+        #password generator handler
         def generate_password():
             length = int(length_var.get())
             include_numbers = numbers_var.get() == 1
@@ -89,7 +98,8 @@ def run_gui():
                 password_entry_logged_in.insert(0, generated_password)  # Use the logged-in password entry
             else:
                 messagebox.showerror("Error", "Password length must be at least 12 characters.")
-
+        
+        # GUI elements for logged-in window
         website_label = tk.Label(logged_in_window, text="Website:")
         website_label.pack()
         website_entry = tk.Entry(logged_in_window)
@@ -106,6 +116,7 @@ def run_gui():
         password_entry_logged_in.pack()
 
         global show_password_var  # Access the global show_password_var
+        
         # Show Password checkbox
         show_password_var = tk.BooleanVar(value=False)
         show_password_checkbox = ttk.Checkbutton(logged_in_window, text="Show Password", variable=show_password_var, command=password_entry_logged_in.toggle_password_visibility)  # Toggle the visibility of the logged-in password entry
@@ -136,7 +147,8 @@ def run_gui():
         generate_button.pack()
 
         logged_in_window.mainloop()
-
+        
+    # GUI elements for login window
     login_window = tk.Tk()
     login_window.title("Login")
 
