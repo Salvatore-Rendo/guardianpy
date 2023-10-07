@@ -3,7 +3,7 @@
  <img width=200px height=200px src="guardianpy/src/guardianpy.png" alt="Project logo"></a>
 </p>
 
-<h3 align="center">Project Title</h3>
+<h3 align="center">Guardianpy</h3>
 
 <div align="center">
 
@@ -74,11 +74,16 @@ git clone https://github.com/Salvatore-Rendo/guardianpy
 cd guardianpy
 ```
 
+```
+pip3 install -r requirements.txt
+```
+
 ## 🎈 Usage <a name="usage"></a>
 
 ```
 python3 main.py
 ```
+
 
 [[TODO -> Images showing how to use]] ////////////////////////////
 
