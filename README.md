@@ -44,7 +44,12 @@ GuardianPy allows users to register and authenticate themselves with a master pa
 
 ### How it works
 
-[[TODO]] ////////////////////////////
+During the login session, the user credentials are checked and the master password is stored for the session.
+After the login, the user is redirected to the main window where he can store or retrive the passwords inside the database.
+The password are safely stored and retrived using a key generation method using the master password and salt.
+During the store session is possible to use a password generetor in which the user can decide the characters and length of the password.
+
+<img src="guardianpy/src/guardianpy-diagram.png">
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
