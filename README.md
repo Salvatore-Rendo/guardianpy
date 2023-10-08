@@ -34,11 +34,7 @@
 
 ## 🧐 About <a name = "about"></a>
 
-Project Description:
-
-GuardianPy is a Python-based password manager designed to enhance the security and convenience of managing your online credentials. With GuardianPy, you can securely store your passwords, retrieve them when needed, and generate strong, unique passwords for your accounts. The project prioritizes the privacy and safety of user data by implementing strong encryption techniques.
-
-GuardianPy allows users to register and authenticate themselves with a master password, which is used to encrypt and decrypt stored passwords. After logging in, users can add, retrieve, and manage their account credentials with confidence, knowing that their sensitive information is protected. The application also features a password generator that creates complex, customizable passwords to bolster account security. GuardianPy simplifies the process of safeguarding your digital identity while offering robust encryption and password management capabilities.
+Guardianpy is a Python-based password manager designed to enhance the security and convenience of managing your online credentials. With Guardianpy, you can securely store your passwords, retrieve them when needed, and generate strong, unique passwords for your accounts. The project prioritizes the privacy and safety of user data by implementing strong encryption techniques.
 
 <b> Guardianpy is still in his beta version, i recommend to wait till version 1.0 at least for a polished and safer release </b>
 
