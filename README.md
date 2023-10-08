@@ -53,11 +53,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-[Tinker](https://docs.python.org/3/library/tkinter.html): if not alredy installed:
+[Tinker](https://docs.python.org/3/library/tkinter.html):
+- If not alredy installed:
 ```
 sudo apt-get install python3-tk
 ```
-or for MacOS
+- for MacOS
 ```
 brew install python3-tk
 ```
