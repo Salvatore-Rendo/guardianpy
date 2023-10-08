@@ -62,7 +62,7 @@ def store_password(user_id, website, email, password, master_password):
     # Store a credential password in the database
     conn = sqlite3.connect("password_manager.db")
     cursor = conn.cursor()
-    key = generate_key(master_password, user_id.to_bytes(32, 'big'))
+    key = generate_key(master_password, user_id)
     encrypted_password = encrypt_password(password, key)
     cursor.execute("INSERT INTO passwords (user_id, website, email, password) VALUES (?, ?, ?, ?)", (user_id, website, email, encrypted_password))
     conn.commit()
@@ -76,7 +76,7 @@ def retrieve_password(user_id, website, master_password):
     encrypted_password = cursor.fetchone()
     conn.close()
     if encrypted_password:
-        key = generate_key(master_password, user_id.to_bytes(32, 'big'))
+        key = generate_key(master_password, user_id)
         decrypted_password = decrypt_password(encrypted_password[0], key)
         return decrypted_password
     return None
