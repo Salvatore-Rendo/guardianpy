@@ -220,5 +220,4 @@ def run_gui():
     calculate_min_size(login_window)
 
     login_window.mainloop()
-
-run_gui()
+    
