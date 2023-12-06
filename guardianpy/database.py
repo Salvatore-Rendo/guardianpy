@@ -3,10 +3,13 @@ import hashlib
 import os
 from guardianpy.encryption import generate_key, encrypt_password, decrypt_password
 
-master_password = None  # Initialize the master password as None
+# Initialize the master password as None
+master_password = None  
 
 def initialize_database():
-    # Initialize the database and create necessary tables if they don't exist
+    """
+    Initialize the database and create necessary tables if they don't exist.
+    """
     conn = sqlite3.connect("password_manager.db")
     cursor = conn.cursor()
     cursor.execute('''CREATE TABLE IF NOT EXISTS users (
@@ -27,7 +30,16 @@ def initialize_database():
     conn.close()
 
 def register_user(username, password):
-    # Register a user in the database
+    """
+    Register a user in the database.
+
+    Args:
+        username (str): The username.
+        password (str): The password.
+
+    Returns:
+        bool: True if registration is successful, False otherwise.
+    """
     conn = sqlite3.connect("password_manager.db")
     cursor = conn.cursor()
     cursor.execute("SELECT username FROM users WHERE username=?", (username,))
@@ -43,7 +55,16 @@ def register_user(username, password):
     return True
 
 def authenticate_user(username, password):
-    # Authenticate a user based on username and password
+    """
+    Authenticate a user based on username and password.
+
+    Args:
+        username (str): The username.
+        password (str): The password.
+
+    Returns:
+        int: The user ID if authentication is successful, None otherwise.
+    """
     conn = sqlite3.connect("password_manager.db")
     cursor = conn.cursor()
     cursor.execute("SELECT id, salt, password FROM users WHERE username=?", (username,))
@@ -59,7 +80,17 @@ def authenticate_user(username, password):
     return None
 
 def store_password(user_id, website, email, password, master_password):
-    # Store a credential password in the database
+    """
+    Store a credential password in the database.
+
+    Args:
+        user_id (int): The user ID.
+        website (str): The website for the stored credential.
+        email (str): The email for the stored credential.
+        password (str): The password for the stored credential.
+        master_password (str): The master password.
+
+    """
     conn = sqlite3.connect("password_manager.db")
     cursor = conn.cursor()
     key = generate_key(master_password, user_id)
@@ -69,7 +100,17 @@ def store_password(user_id, website, email, password, master_password):
     conn.close()
 
 def retrieve_password(user_id, website, master_password):
-    # Retrieve a stored credential password from the database
+    """
+    Retrieve a stored credential password from the database.
+
+    Args:
+        user_id (int): The user ID.
+        website (str): The website for the stored credential.
+        master_password (str): The master password.
+
+    Returns:
+        str: The decrypted password if found, None otherwise.
+    """
     conn = sqlite3.connect("password_manager.db")
     cursor = conn.cursor()
     cursor.execute("SELECT password FROM passwords WHERE user_id=? AND website=?", (user_id, website))
